@@ -5,7 +5,7 @@ def obtener_conexion():
     return psycopg2.connect(
         dbname="nna", 
         user="postgres",   
-        password="",    # ¡Pon tu contraseña real aquí!
+        password="12345",
         host="localhost",
         port="5432"
     )

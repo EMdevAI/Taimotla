@@ -1,103 +1,109 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="section-header">
+    <div class="container">
         <h2>Registrar Nuevo Personal</h2>
+        {% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
+        {% if success %}<div class="alert alert-success">{{ success }}</div>{% endif %}
+
+        <form action="/registrar-empleado" method="POST" class="registro-form">
+            <fieldset>
+                <legend>Datos Personales</legend>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="curp">CURP *</label>
+                        <input type="text" id="curp" name="curp" required maxlength="18" value="{{ request.form.get('curp','') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="rfc">RFC</label>
+                        <input type="text" id="rfc" name="rfc" maxlength="13" value="{{ request.form.get('rfc','') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="p_nombre">Primer Nombre *</label>
+                        <input type="text" id="p_nombre" name="p_nombre" required value="{{ request.form.get('p_nombre','') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="s_nombre">Segundo Nombre</label>
+                        <input type="text" id="s_nombre" name="s_nombre" value="{{ request.form.get('s_nombre','') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="p_apellido">Primer Apellido *</label>
+                        <input type="text" id="p_apellido" name="p_apellido" required value="{{ request.form.get('p_apellido','') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="s_apellido">Segundo Apellido *</label>
+                        <input type="text" id="s_apellido" name="s_apellido" required value="{{ request.form.get('s_apellido','') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_nacimiento">Fecha de Nacimiento *</label>
+                        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required value="{{ request.form.get('fecha_nacimiento','') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="sexo">Sexo</label>
+                        <select id="sexo" name="sexo">
+                            <option value="Masculino" {% if request.form.get('sexo')=='Masculino' %}selected{% endif %}>Masculino</option>
+                            <option value="Femenino" {% if request.form.get('sexo')=='Femenino' %}selected{% endif %}>Femenino</option>
+                            <option value="Otro" {% if request.form.get('sexo')=='Otro' %}selected{% endif %}>Otro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="activo">Activo</label>
+                        <input type="checkbox" id="activo" name="activo" {% if request.form.get('activo') %}checked{% endif %}>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Contacto y Dirección</legend>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="correo">Correo Electrónico *</label>
+                        <input type="email" id="correo" name="correo" required value="{{ request.form.get('correo','') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="text" id="telefono" name="telefono" value="{{ request.form.get('telefono','') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="calle">Calle</label>
+                        <input type="text" id="calle" name="calle" value="{{ request.form.get('calle','') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="num_ext">Número Ext.</label>
+                        <input type="text" id="num_ext" name="num_ext" value="{{ request.form.get('num_ext','') }}">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Rol y Acceso al Sistema</legend>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="rol">Rol *</label>
+                        <select id="rol" name="rol" required>
+                            <option value="">-- Seleccionar --</option>
+                            <option value="director" {% if request.form.get('rol')=='director' %}selected{% endif %}>Director</option>
+                            <option value="coordinador" {% if request.form.get('rol')=='coordinador' %}selected{% endif %}>Coordinador</option>
+                            <option value="abogado" {% if request.form.get('rol')=='abogado' %}selected{% endif %}>Abogado</option>
+                            <option value="psicologo" {% if request.form.get('rol')=='psicologo' %}selected{% endif %}>Psicólogo</option>
+                            <option value="medico" {% if request.form.get('rol')=='medico' %}selected{% endif %}>Médico</option>
+                            <option value="trabajadorsocial" {% if request.form.get('rol')=='trabajadorsocial' %}selected{% endif %}>Trabajador Social</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cedula">Cédula Profesional</label>
+                        <input type="text" id="cedula" name="cedula" value="{{ request.form.get('cedula','') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="contrasena">Contraseña Provisional *</label>
+                        <input type="password" id="contrasena" name="contrasena" required>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-principal">Guardar Registro Completo</button>
+            </div>
+        </form>
     </div>
-
-    <form action="/registrar-personal" method="POST" class="registro-form">
-        
-        <fieldset>
-            <legend>Datos Personales Generales</legend>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>CURP *</label>
-                    <input type="text" name="curp" required maxlength="18">
-                </div>
-                <div class="form-group">
-                    <label>RFC</label>
-                    <input type="text" name="rfc" maxlength="13">
-                </div>
-                <div class="form-group">
-                    <label>Primer Nombre *</label>
-                    <input type="text" name="p_nombre" required>
-                </div>
-                <div class="form-group">
-                    <label>Segundo Nombre</label>
-                    <input type="text" name="s_nombre">
-                </div>
-                <div class="form-group">
-                    <label>Primer Apellido *</label>
-                    <input type="text" name="p_apellido" required>
-                </div>
-                <div class="form-group">
-                    <label>Segundo Apellido *</label>
-                    <input type="text" name="s_apellido" required>
-                </div>
-                <div class="form-group">
-                    <label>Fecha de Nacimiento *</label>
-                    <input type="date" name="fecha_nacimiento" required>
-                </div>
-                <div class="form-group">
-                    <label>Sexo</label>
-                    <select name="sexo">
-                        <option value="Masculino">Masculino</option>
-                        <option value="Femenino">Femenino</option>
-                        <option value="Otro">Otro</option>
-                    </select>
-                </div>
-            </div>
-        </fieldset>
-
-        <fieldset>
-            <legend>Contacto y Dirección</legend>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Correo Electrónico *</label>
-                    <input type="email" name="correo" required>
-                </div>
-                <div class="form-group">
-                    <label>Teléfono</label>
-                    <input type="text" name="telefono">
-                </div>
-                <div class="form-group">
-                    <label>Calle</label>
-                    <input type="text" name="calle">
-                </div>
-                <div class="form-group">
-                    <label>Número Ext.</label>
-                    <input type="text" name="num_ext">
-                </div>
-            </div>
-        </fieldset>
-
-        <fieldset>
-            <legend>Rol y Acceso al Sistema</legend>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Rol en el Sistema *</label>
-                    <select name="rol" required>
-                        <option value="">-- Seleccionar --</option>
-                        <option value="coordinador">Coordinador</option>
-                        <option value="trabajadorsocial">Trabajador Social</option>
-                        <option value="abogado">Abogado</option>
-                        <option value="psicologo">Psicólogo</option>
-                        <option value="medico">Médico</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Cédula Profesional (Si aplica)</label>
-                    <input type="text" name="cedula">
-                </div>
-                <div class="form-group">
-                    <label>Contraseña Provisional *</label>
-                    <input type="password" name="contrasena" required>
-                </div>
-            </div>
-        </fieldset>
-
-        <div class="form-actions">
-            <button type="submit" class="btn-principal">Guardar Registro Completo</button>
-        </div>
-    </form>
 {% endblock %}
