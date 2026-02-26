@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="section-header">
+        <h2>Modificar Datos de Contacto</h2>
+        <a href="/dashboard" class="btn-icon btn-ver" style="text-decoration:none;">← Cancelar y Volver</a>
+    </div>
+
+    {% if persona %}
+    <form action="/editar/{{ persona.CURP }}" method="POST" class="registro-form">
+        <fieldset>
+            <legend>Actualizando datos de: {{ persona.p_nombre }} {{ persona.p_apellido }}</legend>
+            <div class="form-grid">
+                
+                <div class="form-group">
+                    <label>Correo Electrónico *</label>
+                    <input type="email" name="correo" value="{{ persona.correo }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="text" name="telefono" value="{{ persona.telefono }}">
+                </div>
+                
+                <div class="form-group">
+                    <label>Calle</label>
+                    <input type="text" name="calle" value="{{ persona.calle }}">
+                </div>
+                
+            </div>
+        </fieldset>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-principal">Guardar Cambios</button>
+        </div>
+    </form>
+    {% else %}
+        <p>Usuario no encontrado.</p>
+    {% endif %}
+{% endblock %}

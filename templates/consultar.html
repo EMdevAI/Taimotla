@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="section-header">
+        <h2>Expediente del Personal</h2>
+        <a href="/dashboard" class="btn-icon btn-ver" style="text-decoration:none;">← Volver al Listado</a>
+    </div>
+
+    {% if persona %}
+    <fieldset>
+        <legend>Datos Personales de {{ persona.p_nombre }} {{ persona.p_apellido }}</legend>
+        <div class="form-grid">
+            <p><strong>CURP:</strong> {{ persona.CURP }}</p>
+            <p><strong>RFC:</strong> {{ persona.RFC }}</p>
+            <p><strong>Fecha de Nacimiento:</strong> {{ persona.fecha_nacimiento }}</p>
+            <p><strong>Sexo:</strong> {{ persona.sexo }}</p>
+            <p><strong>Correo Electrónico:</strong> {{ persona.correo }}</p>
+            <p><strong>Teléfono:</strong> {{ persona.telefono }}</p>
+            <p><strong>Dirección:</strong> {{ persona.calle }} {{ persona.num_ext }}</p>
+        </div>
+    </fieldset>
+    {% else %}
+        <p>No se encontraron datos para este usuario.</p>
+    {% endif %}
+{% endblock %}

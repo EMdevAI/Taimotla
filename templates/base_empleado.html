@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espacio de Trabajo - Futuro con Derechos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+<body>
+
+    <header class="top-header">
+        <div class="header-titles">
+            <h1>Área de {{ session.get('rol') }}</h1>
+            <p>Atención y Seguimiento de Expedientes</p>
+        </div>
+        <div class="header-logo">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Fundación">
+        </div>
+    </header>
+
+    <nav class="navbar" style="background-color: #556B2F;"> <ul class="nav-links">
+            <li><a href="#">Mis Casos Asignados</a></li>
+            <li><a href="#">Registrar Valoración</a></li>
+        </ul>
+        <div class="user-info">
+            <span>{{ session.get('nombre') }} | <strong>{{ session.get('rol') }}</strong></span>
+            <a href="/logout" class="btn-logout">Salir</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html>

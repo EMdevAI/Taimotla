@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="section-header">
+        <h2>Listado de Usuarios (Personal)</h2>
+    </div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>CURP</th>
+                <th>Nombre Completo</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for empleado in empleados %}
+            <tr>
+                <td>{{ empleado.CURP }}</td>
+                <td>{{ empleado.p_nombre }} {{ empleado.p_apellido }}</td>
+                <td><span class="badge badge-rol">{{ empleado.rol }}</span></td>
+                <td>
+                    {% if empleado.estado == 'Activo' %}
+                        <span class="badge badge-activo">Activo</span>
+                    {% else %}
+                        <span class="badge badge-inactivo">Inactivo</span>
+                    {% endif %}
+                </td>
+                <td class="action-buttons">
+                    <a href="/consultar/{{ empleado.CURP }}" class="btn-icon btn-ver">Ver</a>
+                    
+                    <a href="/editar/{{ empleado.CURP }}" class="btn-icon btn-editar">Editar</a>
+                    
+                    <form action="/revocar/{{ empleado.CURP }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn-icon btn-revocar" onclick="return confirm('¿Seguro que desea revocar el acceso a este usuario?');">Revocar</button>
+                    </form>
+
+                    <form action="/eliminar/{{ empleado.CURP }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn-icon btn-eliminar" onclick="return confirm('¡ADVERTENCIA! ¿Desea eliminar permanentemente a este usuario y todos sus registros?');">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base_empleado.html' %}
+
+{% block content %}
+    <div class="section-header">
+        <h2>Bienvenido a tu Espacio de Trabajo</h2>
+    </div>
+
+    <div class="form-grid">
+        <fieldset>
+            <legend>Resumen de Actividad</legend>
+            <p style="padding: 10px; color: #555;">
+                Actualmente no tienes expedientes de menores asignados a tu perfil de <strong>{{ session.get('rol') }}</strong>. 
+                <br><br>
+                Cuando el Coordinador te asigne un caso, aparecerá aquí para que puedas capturar la información correspondiente a tu área.
+            </p>
+        </fieldset>
+    </div>
+{% endblock %}
